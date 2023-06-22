@@ -5,6 +5,7 @@ from . import LangKitConfig
 lang_config = LangKitConfig()
 _prompt = lang_config.prompt_column
 
+#Text classification model
 _model_path = "JasperLS/gelectra-base-injection"
 _tokenizer = None
 _text_classification_pipeline = None

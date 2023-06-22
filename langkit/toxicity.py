@@ -1,8 +1,8 @@
 from typing import Optional
-
 from whylogs.core.datatypes import String
 from whylogs.experimental.core.metrics.udf_metric import register_metric_udf
 
+#Text classification model
 _toxicity_model_path = "martin-ha/toxic-comment-model"
 _toxicity_tokenizer = None
 _toxicity_pipeline = None

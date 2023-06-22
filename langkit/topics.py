@@ -8,6 +8,7 @@ from . import LangKitConfig
 lang_config = LangKitConfig()
 _topics = lang_config.topics
 
+#Zero-shot classification model
 model_path = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
 classifier = pipeline("zero-shot-classification", model=model_path)
 

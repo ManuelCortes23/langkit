@@ -16,6 +16,7 @@ diagnostic_logger = getLogger(__name__)
 _transformer_model = None
 _theme_groups = None
 
+#Sentence similarity model
 lang_config = LangKitConfig()
 
 

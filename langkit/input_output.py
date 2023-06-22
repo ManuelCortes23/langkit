@@ -9,6 +9,7 @@ from langkit.transformer import load_model
 
 from . import LangKitConfig
 
+#Sentence similarity model
 lang_config = LangKitConfig()
 _transformer_model = None
 _transformer_name = None

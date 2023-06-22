@@ -9,9 +9,11 @@ from langkit import textstat
 from langkit import themes
 from langkit import toxicity
 from langkit import input_output
-
+from langkit import emotions
+from langkit import multi_topic_classification
 
 def init() -> DeclarativeSchema:
+    print("This is Manuel's dev branch by the way")
     injections.init()
     topics.init()
     regexes.init()
@@ -20,5 +22,10 @@ def init() -> DeclarativeSchema:
     themes.init()
     toxicity.init()
     input_output.init()
+
+    #My metrics
+    emotions.init()
+    multi_topic_classification.init()
+
     text_schema = udf_schema()
     return text_schema
