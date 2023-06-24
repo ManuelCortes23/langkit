@@ -11,6 +11,7 @@ from langkit import toxicity
 from langkit import input_output
 from langkit import emotions
 from langkit import multi_topic_classification
+from langkit import irony
 
 def init() -> DeclarativeSchema:
     print("This is Manuel's dev branch by the way")
@@ -26,6 +27,7 @@ def init() -> DeclarativeSchema:
     #My metrics
     emotions.init()
     multi_topic_classification.init()
+    irony.init()
 
     text_schema = udf_schema()
     return text_schema
