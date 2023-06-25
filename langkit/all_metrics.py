@@ -1,5 +1,6 @@
 from whylogs.experimental.core.udf_schema import udf_schema
 from whylogs.core.schema import DeclarativeSchema
+from whylogs.core.datatypes import String, Optional
 
 from langkit import injections
 from langkit import topics
@@ -13,10 +14,10 @@ from langkit import emotions
 from langkit import multi_topic_classification
 from langkit import irony
 
-def init() -> DeclarativeSchema:
+def init(topic_list : Optional[list] = None) -> DeclarativeSchema:
     print("This is Manuel's dev branch by the way")
     injections.init()
-    topics.init()
+    topics.init(topic_list)
     regexes.init()
     sentiment.init()
     textstat.init()
