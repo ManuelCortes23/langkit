@@ -14,14 +14,14 @@ from langkit import emotions
 from langkit import multi_topic_classification
 from langkit import irony
 
-def init(topic_list : Optional[list] = None) -> DeclarativeSchema:
+def init(topic_list : Optional[list] = None, json_path = None) -> DeclarativeSchema:
     print("This is Manuel's dev branch by the way")
     injections.init()
     topics.init(topic_list)
     regexes.init()
     sentiment.init()
     textstat.init()
-    themes.init()
+    themes.init(theme_file_path=json_path)
     toxicity.init()
     input_output.init()
 

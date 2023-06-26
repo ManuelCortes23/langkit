@@ -55,6 +55,59 @@ def register_theme_udfs():
                 similarities.append(similarity)
             return max(similarities)
 
+    if "workmem" in _theme_groups:
+        workmem_embeddings = [
+            _transformer_model.encode(s, convert_to_tensor=True)
+            for s in _theme_groups["workmem"]
+        ]
+
+        @register_metric_udf(col_type=String)
+        def workmem_similarity(text: str) -> float:
+            if _transformer_model is None:
+                raise ValueError("Must initialize a transformer before calling encode!")
+            similarities = []
+            text_embedding = _transformer_model.encode(text, convert_to_tensor=True)
+            for embedding in workmem_embeddings:
+                similarity = get_embeddings_similarity(text_embedding, embedding)
+                similarities.append(similarity)
+            return max(similarities)
+
+
+    if "recentmem" in _theme_groups:
+        recentmem_embeddings = [
+            _transformer_model.encode(s, convert_to_tensor=True)
+            for s in _theme_groups["recentmem"]
+        ]
+
+        @register_metric_udf(col_type=String)
+        def recentmem_similarity(text: str) -> float:
+            if _transformer_model is None:
+                raise ValueError("Must initialize a transformer before calling encode!")
+            similarities = []
+            text_embedding = _transformer_model.encode(text, convert_to_tensor=True)
+            for embedding in recentmem_embeddings:
+                similarity = get_embeddings_similarity(text_embedding, embedding)
+                similarities.append(similarity)
+            return max(similarities)
+
+
+    if "longmem" in _theme_groups:
+        longmem_embeddings = [
+            _transformer_model.encode(s, convert_to_tensor=True)
+            for s in _theme_groups["longmem"]
+        ]
+
+        @register_metric_udf(col_type=String)
+        def longmem_similarity(text: str) -> float:
+            if _transformer_model is None:
+                raise ValueError("Must initialize a transformer before calling encode!")
+            similarities = []
+            text_embedding = _transformer_model.encode(text, convert_to_tensor=True)
+            for embedding in longmem_embeddings:
+                similarity = get_embeddings_similarity(text_embedding, embedding)
+                similarities.append(similarity)
+            return max(similarities)
+
 
 def load_themes(json_path: str):
     try:
