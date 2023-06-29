@@ -7,6 +7,10 @@ _model_path = "SamLowe/roberta-base-go_emotions"
 _tokenizer = None
 _text_classification_pipeline = None
 
+#Text classification model
+_emotion_model_path = "j-hartmann/emotion-english-distilroberta-base"
+_emotion_tokenizer = None
+_emotion_pipeline = None
 
 def init(model_path: Optional[str] = None):
     from transformers import (
@@ -24,6 +28,15 @@ def init(model_path: Optional[str] = None):
         model=model, tokenizer=_tokenizer
     )
 
+    global _emotion_tokenizer, _emotion_pipeline
+    #if model_path is None:
+    model_path = _emotion_model_path
+    _emotion_tokenizer = AutoTokenizer.from_pretrained(_emotion_model_path)
+    emotion_model = AutoModelForSequenceClassification.from_pretrained(_emotion_model_path)
+    _emotion_pipeline = TextClassificationPipeline(
+        model=emotion_model, tokenizer=_emotion_tokenizer
+    )
+
 
 @register_metric_udf(col_type=String)
 def emotion(text) -> str:
@@ -36,11 +49,21 @@ def emotion(text) -> str:
 
     return result[0]['label']
 
-    #Altenatively, we can have each emotion be a feature and return its probability, but that's a lot of features
-    emotion_score = (
-        result[0]["score"]
+
+
+@register_metric_udf(col_type=String)
+def emotion_2(text: str) -> str:
+    if _emotion_pipeline is None or _emotion_tokenizer is None:
+        raise ValueError("emotion score must initialize the pipeline first")
+    result = _emotion_pipeline(
+        text, truncation=True, max_length=_emotion_tokenizer.model_max_length, top_k = None
     )
-    return emotion_score
+
+    return result[0]['label']
+
+
+init()
+
 
 # #The following would upload the top 10 emotions and give their 'probability' on a scale from [0,10]
 # #TODO actualy implement this correctly
@@ -58,5 +81,3 @@ def emotion(text) -> str:
 #     )
 #     return emotion_score
 
-
-init()
